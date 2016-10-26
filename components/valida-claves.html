@@ -1,0 +1,44 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+
+<dom-module id="valida-claves">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <paper-input label="Contraseña con minimo 6 caracteres" char-counter minlength="6" type="password" value="{{contrasena1}}"></paper-input>
+        <paper-input label="Repite contraseña con minimo 6 caracteres" char-counter minlength="6" type="password"  value="{{contrasena2}}"></paper-input>
+        {{contrasena1}}
+        {{contrasena2}}
+    </template>
+    <script>
+        Polymer({
+            is: 'valida-claves',
+            properties: {
+                contrasena1:{
+                    type: String,
+                    notyfy: true,
+                    observer: 'verificaPassword'
+                },
+                contrasena2:{
+                    type: String,
+                    notyfy: true,
+                    observer: 'verificaPassword'
+                }
+            },
+            verificaPassword: function(){
+                console.log('Verificando el password');
+                if(this.contrasena1 == this.contrasena2 && this.contrasena1.length>=6 && this.contrasena2.length>=6 ){
+                    this.fire("contrasena-correcta",this.contrasena1);
+                }else{
+                    this.fire("contrasena-incorrecta",this.contrasena1);
+                }
+            }
+        });
+    </script>
+</dom-module>

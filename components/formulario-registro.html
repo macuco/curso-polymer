@@ -1,0 +1,59 @@
+
+<link rel="import" href="valida-claves.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+
+
+
+<dom-module id="formulario-registro">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            paper-button.green {
+                background-color: red;
+                color: white;
+            }
+        </style>
+        <valida-claves id="claves"></valida-claves>
+        <paper-button disabled id="btEnviar" raised><iron-icon icon="{{iconoEnviar}}"></iron-icon>Enviar</paper-button>
+        <paper-button raised on-tap="limpiar"><iron-icon icon="delete"></iron-icon>Limpiar</paper-button>
+        
+
+    </template>
+    <script>
+        Polymer({
+            is: 'formulario-registro',
+            properties: {
+                iconoEnviar: {
+                    type: String,
+                    value: 'block'
+                }
+            },
+            listeners: {
+                'contrasena-correcta': 'todolisto',
+                'contrasena-incorrecta': 'corregir'
+            },
+            todolisto: function(e, contrasena) {
+                console.log('La contraseña esta lista', contrasena);
+                this.iconoEnviar="send";
+                this.$.btEnviar.disabled=false;
+            },
+            corregir: function(e, contrasena) {
+                console.log('La contraseña es incorrecta', contrasena);
+                this.iconoEnviar="block";
+                this.$.btEnviar.disabled=true;
+
+            },
+            limpiar: function(){
+                this.$.claves.contrasena1="";
+                this.$.claves.contrasena2="";
+            }
+        });
+    </script>
+</dom-module>
